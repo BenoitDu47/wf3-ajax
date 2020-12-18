@@ -1,3 +1,7 @@
 form ul {
     list-style: none;
 }
+.alert {
+    color: red;
+}
+
