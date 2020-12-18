@@ -1,30 +1,46 @@
-<button id="ajaxButton" type="button">Faire une requête</button>
+<!DOCTYPE html>
+<html lang="fr">
 
-<script>
-(function() {
-  var httpRequest;
-  document.getElementById("ajaxButton").addEventListener('click', makeRequest);
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-  function makeRequest() {
-    httpRequest = new XMLHttpRequest();
+<body>
+    <button id="ajaxButton" type="button">Faire une requête</button>
 
-    if (!httpRequest) {
-      alert('Abandon :( Impossible de créer une instance de XMLHTTP');
-      return false;
-    }
-    httpRequest.onreadystatechange = alertContents;
-    httpRequest.open('GET', 'test.html');
-    httpRequest.send();
-  }
+    <script>
+        (function () {
+            var httpRequest;
+            document.getElementById("ajaxButton").addEventListener('click', makeRequest);
 
-  function alertContents() {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        alert(httpRequest.responseText);
-      } else {
-        alert('Il y a eu un problème avec la requête.');
-      }
-    }
-  }
-})();
-</script>
+            function makeRequest() {
+                httpRequest = new XMLHttpRequest();
+
+                if (!httpRequest) {
+                    alert('Abandon : Impossible de créer une instance de XMLHTTP');
+                    return false;
+                }
+                httpRequest.onreadystatechange = alertContents;
+                httpRequest.open('GET', 'test.xml');
+                httpRequest.send();
+            }
+
+            function alertContents() {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        var xmldoc = httpRequest.responseXML;
+                        var root_node = xmldoc.getElementsByTagName('root').item(0);
+                        alert(root_node.firstChild.data);
+                    } else {
+                        console.log(httpRequest.status);
+                        // alert('Il y a eu un problème avec la requête.');
+                    }
+                }
+            }
+        })();
+    </script>
+</body>
+
+</html>
